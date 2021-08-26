@@ -1,0 +1,53 @@
+version: '3'
+services:
+ # Nginx server configuration   
+  web:
+    image: nginx:latest
+    container_name: webserver
+    depends_on:
+      - docker-mysql
+      - php
+    links:
+      - docker-mysql
+      - php
+    volumes:
+      - ./web:/var/www/html
+      - ./nginx:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
+ # Php-fpm configuration
+  php:
+    build: ./php/  
+    container_name: php-container  
+    expose:  
+      - 9000  
+    links:  
+      - docker-mysql
+    volumes:
+      - ./web:/var/www/html
+      - ./php:/usr/local/etc/php/php.ini
+  adminer:
+    image: adminer
+    restart: always
+    environment: 
+        ADMINER_DEFAULT_SERVER: docker-mysql
+        ADMINER_DESIGN: pepa-linha
+    ports:
+      - "8080:8080"
+    depends_on:
+        - docker-mysql
+ # Mysql configuration
+  docker-mysql:
+    image: mysql:5.7
+    container_name: docker-mysql-demo
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+        MYSQL_ROOT_PASSWORD: wil99  
+        MYSQL_DATABASE: mydb  
+        MYSQL_USER: wilber  
+        MYSQL_PASSWORD: wil99  
+    ports:
+        - "3306:3306"
+    volumes:
+        - ./db:/var/lib/mysql

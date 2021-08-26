@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<users>
+  <user>
+    <id>1</id>
+    <nombre>Simon</nombre>
+    <apellido>Parker</apellido>
+    <email>simon@email.it</email>
+  </user>
+  <user>
+    <id>2</id>
+    <nombre>Mary</nombre>
+    <apellido>Bloody</apellido>
+    <email>mary@email.it</email>
+  </user>
+</users>
